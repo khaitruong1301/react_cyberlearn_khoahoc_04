@@ -22,9 +22,11 @@ export default function Login(props) {
             //Chuyển đến trang chỉ định sau khi xử lý
             // Chuyển hướng đến path tương ứng
             //  props.history.push('/home');
-
             //replace thay đổi nội dung path tương ứng
-            props.history.replace('/home');
+            // props.history.replace('/home');
+            props.history.goBack();
+            localStorage.setItem('userLogin',JSON.stringify(userLogin))
+
         }else {
             alert('Login fail !')
             return;

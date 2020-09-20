@@ -7,6 +7,7 @@ import Detail from './pages/Detail/Detail';
 import Home from './pages/Home/Home';
 import Login from './pages/Login/Login';
 import PageNotFound from './pages/PageNotFound/PageNotFound';
+import Profile from './pages/Profile/Profile';
 
 function App() {
   return (
@@ -19,6 +20,8 @@ function App() {
         <Route exact path='/about' component={About} />
         <Route exact path='/login' component={Login} />
         <Route exact path='/detail/:id' component={Detail} />
+        <Route exact path='/profile' component={Profile} />
+
         <Route exact path='/' component={Home} />
         <Route path="*" component={PageNotFound}/>
 
