@@ -5,7 +5,13 @@ import style from './Todolist.css'
 export default class Todolist extends Component {
 
     state = {
-        taskList: []
+        taskList: [],
+        values: {
+            taskName: ''
+        },
+        errors: {
+            taskName: ''
+        }
     }
 
     getTaskList = () => {
@@ -24,6 +30,8 @@ export default class Todolist extends Component {
 
             console.log('thành công')
         });
+
+
         promise.catch((err) => {
             console.log('thất bại')
 
@@ -64,11 +72,66 @@ export default class Todolist extends Component {
             </li>
         })
     }
+    //Hàm sẽ tự động thực thi sau khi nội dung component được render
+    componentDidMount() {
+        this.getTaskList();
+    }
+
+
+    handleChange = (e) => {
+        let { value, name } = e.target;
+        console.log(value, name);
+        let newValues = { ...this.state.values };
+
+        newValues = { ...newValues, [name]: value };
+
+        let newErrors = { ...this.state.errors };
+
+        let regexString = /^[a-z A-Z]+$/;
+
+        if (!regexString.test(value) || value.trim() === '') {
+            newErrors[name] = name + ' invalid !';
+        } else {
+            newErrors[name] = '';
+        }
+
+
+        this.setState({
+            ...this.state,
+            values: newValues,
+            errors: newErrors
+        })
+    }
+
+    addTask = (e) => {
+        e.preventDefault(); //Dừng sự kiện submit form
+        console.log(this.state.values.taskName);
+
+        let promise =  Axios({
+            url:'http://svcy.myclass.vn/api/ToDoList/AddTask',
+            method:'POST',
+            data: {taskName:this.state.values.taskName}
+        });
+
+        //Xử lý thành công
+        promise.then(result => {
+            // alert(result.data);
+            this.getTaskList();
+
+        })
+
+        //Xử lý thất bại
+        promise.catch(errors => {
+            alert(errors.response.data)
+
+        })
+
+    }
 
     render() {
         return (
-            <div>
-                <button onClick={() => { this.getTaskList() }}>Get task list</button>
+            <form onSubmit={ this.addTask }>
+                {/* <button onClick={() => { this.getTaskList() }}>Get task list</button> */}
                 <div className="card">
                     <div className="card__header">
                         <img src={require('./bg.png')} />
@@ -76,17 +139,22 @@ export default class Todolist extends Component {
                     {/* <h2>hello!</h2> */}
                     <div className="card__body">
                         <div className="card__content">
-                            <div className="card__title">
-                                <h2>My Tasks</h2>
-                                <p>September 9,2020</p>
+                            <div className="form-group">
+                                <div className="card__title">
+                                    <h2>My Tasks</h2>
+                                    <p>September 9,2020</p>
+                                </div>
+                                <div className="card__add">
+                                    <input name="taskName" onChange={this.handleChange} id="newTask" type="text" placeholder="Enter an activity..." />
+
+                                    <button id="addItem" onClick={this.addTask}>
+                                        <i className="fa fa-plus" />
+                                    </button>
+                                </div>
+                                <span className="text text-danger">{this.state.errors.taskName}</span>
                             </div>
-                            <div className="card__add">
-                                <input id="newTask" type="text" placeholder="Enter an activity..." />
-                                <button id="addItem">
-                                    <i className="fa fa-plus" />
-                                </button>
-                            </div>
-                            <div className="card__todo">
+                          
+                            <div className="card__todo form-group">
                                 {/* Uncompleted tasks */}
                                 <ul className="todo" id="todo">
                                     {this.renderTaskToDo()}
@@ -112,7 +180,7 @@ export default class Todolist extends Component {
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
         )
     }
 }
