@@ -44,10 +44,14 @@ export default class Todolist extends Component {
             return <li key={index}>
                 <span>{item.taskName}</span>
                 <div className="buttons">
-                    <button className="remove">
+                    <button className="remove" type="button" onClick={() => {
+                        this.delTask(item.taskName)
+                    }}>
                         <i className="fa fa-trash-alt" />
                     </button>
-                    <button className="complete">
+                    <button type="button" className="complete" onClick={()=>{
+                        this.checkTask(item.taskName)
+                    }}>
                         <i className="far fa-check-circle" />
                         <i className="fas fa-check-circle" />
                     </button>
@@ -56,22 +60,82 @@ export default class Todolist extends Component {
         })
     }
 
+    
     renderTaskToDoDone = () => {
         return this.state.taskList.filter(item => item.status).map((item, index) => {
             return <li key={index}>
-                <span>Ăn sáng</span>
+                <span>{item.taskName}</span>
                 <div className="buttons">
-                    <button className="remove">
+                    <button className="remove" type="button" onClick={() => {
+                        this.delTask(item.taskName)
+                    }}>
                         <i className="fa fa-trash-alt" />
                     </button>
-                    <button className="complete">
-                        <i className="far fa-check-circle" />
-                        <i className="fas fa-check-circle" />
+                    <button  type="button" className="complete" onClick={()=>{
+                        this.rejectTask(item.taskName)
+                    }}>
+                        <i className="far fa-undo" />
+                        <i className="fas fa-undo" />
                     </button>
                 </div>
             </li>
         })
     }
+
+    //Xử lý reject task
+    rejectTask = (taskName)=>{
+        let promise = Axios({
+            url:`http://svcy.myclass.vn/api/ToDoList/rejectTask?taskName=${taskName}`,
+            method:'PUT'
+        });
+        
+        promise.then(res=>{
+            alert(res.data);
+            this.getTaskList();
+        });
+
+        promise.catch(err=>{
+            alert(err.response.data);
+        })
+
+    }
+
+    //Xử lý done task
+    checkTask = (taskName) => {
+        let promise = Axios({
+            url:`http://svcy.myclass.vn/api/ToDoList/doneTask?taskName=${taskName}`,
+            method:'PUT'
+        });
+
+        promise.then(res=>{
+            alert(res.data);
+            this.getTaskList();
+        });
+
+        promise.catch(err=>{
+            alert(err.response.data);
+        })
+    }
+
+
+    //Hàm xử lý xóa task
+    delTask = (taskName) => {
+        let promise = Axios({
+            url: `http://svcy.myclass.vn/api/ToDoList/deleteTask?taskName=${taskName}`,
+            method: 'DELETE'
+        });
+
+        promise.then(result => {
+            alert(result.data);
+            this.getTaskList();
+        });
+
+        promise.catch(errors => {
+            alert(errors.response.data)
+        })
+    }
+
+
     //Hàm sẽ tự động thực thi sau khi nội dung component được render
     componentDidMount() {
         this.getTaskList();
@@ -107,10 +171,10 @@ export default class Todolist extends Component {
         e.preventDefault(); //Dừng sự kiện submit form
         console.log(this.state.values.taskName);
 
-        let promise =  Axios({
-            url:'http://svcy.myclass.vn/api/ToDoList/AddTask',
-            method:'POST',
-            data: {taskName:this.state.values.taskName}
+        let promise = Axios({
+            url: 'http://svcy.myclass.vn/api/ToDoList/AddTask',
+            method: 'POST',
+            data: { taskName: this.state.values.taskName }
         });
 
         //Xử lý thành công
@@ -130,7 +194,7 @@ export default class Todolist extends Component {
 
     render() {
         return (
-            <form onSubmit={ this.addTask }>
+            <form onSubmit={this.addTask}>
                 {/* <button onClick={() => { this.getTaskList() }}>Get task list</button> */}
                 <div className="card">
                     <div className="card__header">
@@ -153,7 +217,7 @@ export default class Todolist extends Component {
                                 </div>
                                 <span className="text text-danger">{this.state.errors.taskName}</span>
                             </div>
-                          
+
                             <div className="card__todo form-group">
                                 {/* Uncompleted tasks */}
                                 <ul className="todo" id="todo">
