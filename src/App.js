@@ -8,6 +8,8 @@ import Home from './pages/Home/Home';
 import Login from './pages/Login/Login';
 import PageNotFound from './pages/PageNotFound/PageNotFound';
 import Profile from './pages/Profile/Profile';
+import Todolist from './pages/Todolist/Todolist';
+import TodolistRFC from './pages/Todolist/TodolistRFC';
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
         <Route exact path='/login' component={Login} />
         <Route exact path='/detail/:id' component={Detail} />
         <Route exact path='/profile' component={Profile} />
+        <Route exact path='/todolistrfc' component={TodolistRFC} />
+        <Route exact path='/todolistrcc' component={Todolist} />
 
         <Route exact path='/' component={Home} />
         <Route path="*" component={PageNotFound}/>

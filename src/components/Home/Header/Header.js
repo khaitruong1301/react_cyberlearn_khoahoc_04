@@ -11,20 +11,29 @@ export default function Header() {
             <div className="collapse navbar-collapse" id="collapsibleNavId">
                 <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
                     <li className="nav-item">
-                        <NavLink activeClassName="activeNavItem" activeStyle={{fontWeight:'bold'}} className="nav-link" to="/home">Home </NavLink>
+                        <NavLink activeClassName="activeNavItem" activeStyle={{ fontWeight: 'bold' }} className="nav-link" to="/home">Home </NavLink>
                     </li>
                     <li className="nav-item">
-                        <NavLink activeClassName="activeNavItem" activeStyle={{fontWeight:'bold'}} className="nav-link" to="/about">About</NavLink>
+                        <NavLink activeClassName="activeNavItem" activeStyle={{ fontWeight: 'bold' }} className="nav-link" to="/about">About</NavLink>
                     </li>
                     <li className="nav-item dropdown">
-                    <NavLink activeClassName="activeNavItem" activeStyle={{fontWeight:'bold'}} className="nav-link" to="/contact">Contact</NavLink>
+                        <NavLink activeClassName="activeNavItem" activeStyle={{ fontWeight: 'bold' }} className="nav-link" to="/contact">Contact</NavLink>
                     </li>
                     <li className="nav-item dropdown">
-                    <NavLink activeClassName="activeNavItem" activeStyle={{fontWeight:'bold'}} className="nav-link" to="/login">Login</NavLink>
+                        <NavLink activeClassName="activeNavItem" activeStyle={{ fontWeight: 'bold' }} className="nav-link" to="/login">Login</NavLink>
                     </li>
                     <li className="nav-item dropdown">
-                    <NavLink activeClassName="activeNavItem" activeStyle={{fontWeight:'bold'}} className="nav-link" to="/profile">profile</NavLink>
+                        <NavLink activeClassName="activeNavItem" activeStyle={{ fontWeight: 'bold' }} className="nav-link" to="/profile">profile</NavLink>
                     </li>
+                   
+                    <li className="nav-item dropdown">
+                        <a className="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Bài tập</a>
+                        <div className="dropdown-menu" aria-labelledby="dropdownId">
+                            <NavLink className="dropdown-item" to="/todolistrfc">To do list rfc</NavLink>
+                            <NavLink className="dropdown-item" to="/todolistrcc">To do list rcc</NavLink>
+                        </div>
+                    </li>
+
                 </ul>
                 <form className="form-inline my-2 my-lg-0">
                     <input className="form-control mr-sm-2" type="text" placeholder="Search" />
@@ -35,3 +44,6 @@ export default function Header() {
 
     )
 }
+
+
+
