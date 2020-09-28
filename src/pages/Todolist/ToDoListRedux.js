@@ -1,10 +1,17 @@
 import Axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import {useSelector,useDispatch} from 'react-redux'
+import { GET_TASK_API } from '../../redux/constants/ToDoListConst';
 
-export default function TodolistRFC(props) {
+
+export default function ToDoListRedux(props) {
+    
+    //Lấy tasklist từ redux về
+    const {taskList} = useSelector(state => state.ToDoListReducer);
+    const dispatch = useDispatch();
 
     let [state, setState] = useState({
-        taskList: [],
+     
         values: {
             taskName: ''
         },
@@ -48,9 +55,9 @@ export default function TodolistRFC(props) {
             console.log(result.data);
             //Nếu gọi api lấy về kết quả thành công 
             //=> set lại state của component
-            setState({
-                ...state,
-                taskList: result.data
+            dispatch({
+                type:GET_TASK_API,
+                taskList:result.data
             })
 
             console.log('thành công')
@@ -152,7 +159,7 @@ export default function TodolistRFC(props) {
 
 
     const renderTaskToDo = () => {
-        return state.taskList.filter(item => !item.status).map((item, index) => {
+        return taskList.filter(item => !item.status).map((item, index) => {
             return <li key={index}>
                 <span>{item.taskName}</span>
                 <div className="buttons">
@@ -174,7 +181,7 @@ export default function TodolistRFC(props) {
 
 
     const renderTaskToDoDone = () => {
-        return state.taskList.filter(item => item.status).map((item, index) => {
+        return taskList.filter(item => item.status).map((item, index) => {
             return <li key={index}>
                 <span>{item.taskName}</span>
                 <div className="buttons">
@@ -228,4 +235,6 @@ export default function TodolistRFC(props) {
         </div>
 
     )
+
+
 }

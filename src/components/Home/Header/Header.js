@@ -31,6 +31,7 @@ export default function Header() {
                         <div className="dropdown-menu" aria-labelledby="dropdownId">
                             <NavLink className="dropdown-item" to="/todolistrfc">To do list rfc</NavLink>
                             <NavLink className="dropdown-item" to="/todolistrcc">To do list rcc</NavLink>
+                            <NavLink className="dropdown-item" to="/todolistredux">To do list redux</NavLink>
                         </div>
                     </li>
 
