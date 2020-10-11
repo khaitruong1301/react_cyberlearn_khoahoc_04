@@ -1,12 +1,14 @@
 import Axios from 'axios';
 import React, { useEffect, useState } from 'react'
 
-import {useDispatch} from 'react-redux';
+import {useDispatch,useSelector} from 'react-redux';
 
 
 export default function BaiTapToDoListSaga(props) {
 
     const dispatch = useDispatch(); 
+    const {taskList} = useSelector(state => state.ToDoListReducer)
+
 
     let [state, setState] = useState({
         taskList: [],
@@ -79,7 +81,7 @@ export default function BaiTapToDoListSaga(props) {
 
 
     const renderTaskToDo = () => {
-        return state.taskList.filter(item => !item.status).map((item, index) => {
+        return taskList.filter(item => !item.status).map((item, index) => {
             return <li key={index}>
                 <span>{item.taskName}</span>
                 <div className="buttons">
@@ -101,7 +103,7 @@ export default function BaiTapToDoListSaga(props) {
 
 
     const renderTaskToDoDone = () => {
-        return state.taskList.filter(item => item.status).map((item, index) => {
+        return taskList.filter(item => item.status).map((item, index) => {
             return <li key={index}>
                 <span>{item.taskName}</span>
                 <div className="buttons">
