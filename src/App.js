@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, NavLink, Route, Switch } from 'react-router-dom';
 import Header from './components/Home/Header/Header';
 import About from './pages/About/About';
+import BaiTapToDoListSaga from './pages/BaiTapToDoListSaga/BaiTapToDoListSaga';
 import Contact from './pages/Contact/Contact';
 import Detail from './pages/Detail/Detail';
 import Home from './pages/Home/Home';
@@ -27,6 +28,7 @@ function App() {
         <Route exact path='/todolistrfc' component={TodolistRFC} />
         <Route exact path='/todolistrcc' component={Todolist} />
         <Route exact path='/todolistredux' component={ToDoListRedux} />
+        <Route exact path='/todolistsaga' component={BaiTapToDoListSaga} />
 
 
         <Route exact path='/' component={Home} />
