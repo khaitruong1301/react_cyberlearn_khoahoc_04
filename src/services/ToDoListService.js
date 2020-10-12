@@ -13,6 +13,16 @@ export class ToDoListService {
         })
     }
 
+    addTaskApi = (taskName) => {
+        return Axios({
+            url: `${DOMAIN}/ToDoList/addTask`,
+            method: 'POST',
+            data: {
+                taskName:taskName
+            }
+        })
+    }
+
 }
 
 export const toDoListService = new ToDoListService();

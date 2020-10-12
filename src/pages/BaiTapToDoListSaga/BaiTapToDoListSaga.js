@@ -2,6 +2,7 @@ import Axios from 'axios';
 import React, { useEffect, useState } from 'react'
 
 import {useDispatch,useSelector} from 'react-redux';
+import { ADD_TASK_API, GET_TASKLIST_API } from '../../redux/constants/ToDoListConst';
 
 
 export default function BaiTapToDoListSaga(props) {
@@ -48,13 +49,17 @@ export default function BaiTapToDoListSaga(props) {
     const getTaskList = () => {
         //Dispatch action saga
         dispatch({
-            type:'getTaskApiAction',
-            data:'abc'
+            type:GET_TASKLIST_API,
+           
         })
     }
 
     const addTask = (e) => {
-      
+        e.preventDefault();
+        dispatch({
+            type:ADD_TASK_API,
+            taskName: state.values.taskName
+        })
     }
 
     useEffect(() => {
