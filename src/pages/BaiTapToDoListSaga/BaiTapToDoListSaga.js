@@ -46,7 +46,11 @@ export default function BaiTapToDoListSaga(props) {
 
 
     const getTaskList = () => {
-      
+        //Dispatch action saga
+        dispatch({
+            type:'getTaskApiAction',
+            data:'abc'
+        })
     }
 
     const addTask = (e) => {
@@ -54,8 +58,8 @@ export default function BaiTapToDoListSaga(props) {
     }
 
     useEffect(() => {
-     
-
+        //Gọi hàm getTaskList
+        getTaskList();
 
         return () => {
 
