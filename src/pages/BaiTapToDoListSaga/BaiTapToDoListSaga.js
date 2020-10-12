@@ -2,7 +2,7 @@ import Axios from 'axios';
 import React, { useEffect, useState } from 'react'
 
 import {useDispatch,useSelector} from 'react-redux';
-import { ADD_TASK_API, GET_TASKLIST_API } from '../../redux/constants/ToDoListConst';
+import { ADD_TASK_API, CHECK_TASK_API, DELETE_TASK_API, GET_TASKLIST_API, REJECT_TASK_API } from '../../redux/constants/ToDoListConst';
 
 
 export default function BaiTapToDoListSaga(props) {
@@ -73,19 +73,29 @@ export default function BaiTapToDoListSaga(props) {
 
     //Xử lý reject task
     const rejectTask = (taskName)=>{
-      
+        dispatch({
+            type:REJECT_TASK_API,
+            taskName
+        })
 
     }
 
     //Xử lý done task
    const  checkTask = (taskName) => {
-      
+      dispatch({
+          type:CHECK_TASK_API,
+          taskName
+      })
     }
 
 
     //Hàm xử lý xóa task
     const delTask = (taskName) => {
-   
+        console.log(taskName)
+        dispatch({
+            type:DELETE_TASK_API,
+            taskName:taskName
+        })
     }
 
 

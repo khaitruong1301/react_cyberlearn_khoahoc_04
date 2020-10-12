@@ -1,6 +1,6 @@
 import Axios from 'axios'
 import { call, delay, fork, take, takeEvery, takeLatest, put } from 'redux-saga/effects'
-import { ADD_TASK_API, GET_TASKLIST_API, GET_TASK_API } from '../constants/ToDoListConst';
+import { ADD_TASK_API, CHECK_TASK_API, DELETE_TASK_API, GET_TASKLIST_API, GET_TASK_API, REJECT_TASK_API } from '../constants/ToDoListConst';
 import { toDoListService } from '../../services/ToDoListService'
 import { STATUS_CODE } from '../../util/constants/settingSystem';
 import { DISPLAY_LOADING, HIDE_LOADING } from '../constants/LoadingConst';
@@ -20,7 +20,7 @@ function* getTaskApiAction(action) {
     })
     try {
         let { data, status } = yield call(toDoListService.getTaskApi)
-        yield delay(1000);
+        yield delay(300);
         if (status === STATUS_CODE.SUCCESS) {
             //Sau khi lấy giá trị thành công dùng put (giống dispatch bên thunk) 
             yield put({
@@ -45,8 +45,8 @@ export function* theoDoiActionGetTaskApi() {
 }
 
 /*
-    01/01/2020 Khải viết chức năng getTask
-    Action saga lấy danh sách task từ api 
+    01/01/2020 Khải viết chức năng addTask
+    Action saga nghiệp vụ thêm task
 */
 
 function* addTaskApiAction(action) {
@@ -69,5 +69,99 @@ function* addTaskApiAction(action) {
 
 export function* theoDoiActionAddTaskApi() {
     yield takeLatest(ADD_TASK_API, addTaskApiAction)
+}
+
+/*
+    01/01/2020 Khải viết chức năng deleteTask
+    Action saga nghiệp vụ xóa task
+*/
+
+function* deleteTaskApi(action) {
+    console.log(action)
+    const { taskName } = action;
+    try {
+        //Gọi api deletetask
+        const { data, status } = yield call(() => {
+            return toDoListService.deleteTaskApi(taskName);
+        });
+
+        if (status === STATUS_CODE.SUCCESS) {
+            //Nếu thành công thì gọi lại action GET_TASKLIST_API(action saga thực thi)
+            yield put({
+                type: GET_TASKLIST_API,
+            })
+        }
+
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+
+
+export function* theoDoiActionDeleteTask() {
+    yield takeLatest(DELETE_TASK_API, deleteTaskApi)
+}
+
+
+
+/*
+    01/01/2020 Khải viết chức năng deleteTask
+    Action saga thực hiện nghiệp vụ done task
+*/
+
+function* checkDoneTaskApi(action) {
+    const { taskName } = action;
+
+    try {
+        const { data, status } = yield call(() => {
+            return toDoListService.checkDoneTask(taskName);
+        });
+        if (status === STATUS_CODE.SUCCESS) {
+            yield put({
+                type: GET_TASKLIST_API
+            })
+        }
+    } catch (error) {
+        console.log(error);
+    }
+
+}
+
+
+
+export function* theoDoiDoneTask() {
+    yield takeLatest(CHECK_TASK_API, checkDoneTaskApi)
+}
+
+
+
+/*
+    01/01/2020 Khải viết chức năng deleteTask
+    Action saga thực hiện nghiệp vụ reject task
+*/
+export function* rejectTaskApi(action) {
+    const { taskName } = action;
+
+    try{
+        const {data,status} = yield call (()=>{
+            return toDoListService.rejectTask(taskName);
+        })
+        
+        if(status === STATUS_CODE.SUCCESS) {
+            yield put ({
+                type:GET_TASKLIST_API
+            })
+        }
+    }catch(err) {
+        console.log(err)
+    }
+
+
+}
+
+
+export function* theoDoiRejectTask() {
+    yield takeLatest(REJECT_TASK_API, rejectTaskApi)
 }
 
