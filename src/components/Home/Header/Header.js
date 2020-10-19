@@ -25,7 +25,9 @@ export default function Header() {
                     <li className="nav-item dropdown">
                         <NavLink activeClassName="activeNavItem" activeStyle={{ fontWeight: 'bold' }} className="nav-link" to="/profile">profile</NavLink>
                     </li>
-                   
+                    <li className="nav-item">
+                        <NavLink activeClassName="activeNavItem" activeStyle={{ fontWeight: 'bold' }} className="nav-link" to="/demohocmodal">Demo HOC </NavLink>
+                    </li>
                     <li className="nav-item dropdown">
                         <a className="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Bài tập</a>
                         <div className="dropdown-menu" aria-labelledby="dropdownId">

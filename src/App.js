@@ -2,9 +2,11 @@ import React from 'react';
 import { BrowserRouter, NavLink, Route, Switch } from 'react-router-dom';
 import LoadingComponent from './components/GlobalSetting/LoadingComponent/LoadingComponent';
 import Header from './components/Home/Header/Header';
+import Modal from './HOC/Modal/Modal';
 import About from './pages/About/About';
 import BaiTapToDoListSaga from './pages/BaiTapToDoListSaga/BaiTapToDoListSaga';
 import Contact from './pages/Contact/Contact';
+import DemoHOCModal from './pages/DemoHOCModal/DemoHOCModal';
 import Detail from './pages/Detail/Detail';
 import Home from './pages/Home/Home';
 import Login from './pages/Login/Login';
@@ -18,6 +20,7 @@ function App() {
   return (
     <BrowserRouter>
       <Header />
+      <Modal />
       <LoadingComponent />
       <Switch>
         
@@ -31,6 +34,7 @@ function App() {
         <Route exact path='/todolistrcc' component={Todolist} />
         <Route exact path='/todolistredux' component={ToDoListRedux} />
         <Route exact path='/todolistsaga' component={BaiTapToDoListSaga} />
+        <Route exact path='/demohocmodal' component={DemoHOCModal} />
 
 
         <Route exact path='/' component={Home} />
