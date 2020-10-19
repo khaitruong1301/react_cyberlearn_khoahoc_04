@@ -15,30 +15,38 @@ import Profile from './pages/Profile/Profile';
 import Todolist from './pages/Todolist/Todolist';
 import ToDoListRedux from './pages/Todolist/ToDoListRedux';
 import TodolistRFC from './pages/Todolist/TodolistRFC';
+import { HomeTemplate } from './templates/HomeTemplate/HomeTemplate';
 
 function App() {
   return (
     <BrowserRouter>
-      <Header />
       <Modal />
       <LoadingComponent />
       <Switch>
         
-        <Route exact path='/home' component={Home} />
-        <Route exact path='/contact' component={Contact} />
-        <Route exact path='/about' component={About} />
-        <Route exact path='/login' component={Login} />
-        <Route exact path='/detail/:id' component={Detail} />
-        <Route exact path='/profile' component={Profile} />
-        <Route exact path='/todolistrfc' component={TodolistRFC} />
-        <Route exact path='/todolistrcc' component={Todolist} />
-        <Route exact path='/todolistredux' component={ToDoListRedux} />
-        <Route exact path='/todolistsaga' component={BaiTapToDoListSaga} />
-        <Route exact path='/demohocmodal' component={DemoHOCModal} />
+        {/* <Route exact path='/home'  render={(propsRoute)=>{
+          return <div>
+                <Header />
+                <Home {...propsRoute} />
+          </div>
+        }}/> */}
+
+        <HomeTemplate path="/home" exact Component={Home} />
+
+        <HomeTemplate exact path='/contact' Component={Contact}/>
+        <HomeTemplate exact path='/about' Component={About} />
+        <HomeTemplate exact path='/login' component={Login} />
+        <HomeTemplate exact path='/detail/:id' component={Detail} />
+        <HomeTemplate exact path='/profile' component={Profile} />
+        <HomeTemplate exact path='/todolistrfc' component={TodolistRFC} />
+        <HomeTemplate exact path='/todolistrcc' component={Todolist} />
+        <HomeTemplate exact path='/todolistredux' component={ToDoListRedux} />
+        <HomeTemplate exact path='/todolistsaga' component={BaiTapToDoListSaga} />
+        <HomeTemplate exact path='/demohocmodal' component={DemoHOCModal} />
 
 
-        <Route exact path='/' component={Home} />
-        <Route path="*" component={PageNotFound}/>
+        <HomeTemplate exact path='/' component={Home} />
+        <HomeTemplate path="*" component={PageNotFound}/>
 
       </Switch>
   
