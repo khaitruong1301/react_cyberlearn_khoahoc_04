@@ -43,8 +43,6 @@ function App() {
         <HomeTemplate exact path='/todolistredux' component={ToDoListRedux} />
         <HomeTemplate exact path='/todolistsaga' component={BaiTapToDoListSaga} />
         <HomeTemplate exact path='/demohocmodal' component={DemoHOCModal} />
-
-
         <HomeTemplate exact path='/' component={Home} />
         <HomeTemplate path="*" component={PageNotFound}/>
 
