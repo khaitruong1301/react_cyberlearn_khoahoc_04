@@ -3,7 +3,7 @@ import Todolist from "../../pages/Todolist/Todolist";
 import TodolistRFC from "../../pages/Todolist/TodolistRFC";
 import * as ToDoListSaga from './ToDoListSaga'
 // import {theoDoiActionGetTaskApi} from './ToDoListSaga'
-
+import * as Cyberbugs from './Cyberbugs/UserCyberbugsSaga'
 
 export function* rootSaga() {
 
@@ -13,9 +13,10 @@ export function* rootSaga() {
     ToDoListSaga.theoDoiActionAddTaskApi(),
     ToDoListSaga.theoDoiActionDeleteTask(),
     ToDoListSaga.theoDoiDoneTask(),
-    ToDoListSaga.theoDoiRejectTask()
-    //Nghiệp ...
-
+    ToDoListSaga.theoDoiRejectTask(),
+    
+    //Nghiệp vụ cyberbugs .... ,
+    Cyberbugs.theoDoiSignin()
   ])
 
 
