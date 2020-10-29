@@ -7,13 +7,16 @@ import * as serviceWorker from './serviceWorker';
 import store from './redux/configStore'
 import { Provider } from 'react-redux';
 import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
+import { BrowserRouter } from 'react-router-dom';
 
 
 
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>
+  <BrowserRouter>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </BrowserRouter>
   ,
 
   document.getElementById('root')

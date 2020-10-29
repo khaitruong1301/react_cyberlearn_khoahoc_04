@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter, NavLink, Route, Switch } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { BrowserRouter, NavLink, Route, Switch, useHistory } from 'react-router-dom';
 import LoadingComponent from './components/GlobalSetting/LoadingComponent/LoadingComponent';
 import Header from './components/Home/Header/Header';
 import Modal from './HOC/Modal/Modal';
@@ -18,14 +18,23 @@ import ToDoListRedux from './pages/Todolist/ToDoListRedux';
 import TodolistRFC from './pages/Todolist/TodolistRFC';
 import { HomeTemplate } from './templates/HomeTemplate/HomeTemplate';
 import { UserLoginTemplate } from './templates/HomeTemplate/UserLoginTemplate';
+import { useDispatch } from 'react-redux';
 
 function App() {
+
+  const history = useHistory();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({ type: 'ADD_HISTORY', history: history });
+  }, [])
+
+
   return (
-    <BrowserRouter>
+    <>
       <Modal />
       <LoadingComponent />
       <Switch>
-        
+
         {/* <Route exact path='/home'  render={(propsRoute)=>{
           return <div>
                 <Header />
@@ -34,8 +43,7 @@ function App() {
         }}/> */}
 
         <HomeTemplate path="/home" exact Component={Home} />
-
-        <HomeTemplate exact path='/contact' Component={Contact}/>
+        <HomeTemplate exact path='/contact' Component={Contact} />
         <HomeTemplate exact path='/about' Component={About} />
         <UserLoginTemplate exact path='/login' Component={LoginCyberBugs} />
         <HomeTemplate exact path='/detail/:id' Component={Detail} />
@@ -45,14 +53,12 @@ function App() {
         <HomeTemplate exact path='/todolistredux' Component={ToDoListRedux} />
         <HomeTemplate exact path='/todolistsaga' Component={BaiTapToDoListSaga} />
         <HomeTemplate exact path='/demohocmodal' Component={DemoHOCModal} />
-
-
         <HomeTemplate exact path='/' component={Home} />
-        <HomeTemplate path="*" component={PageNotFound}/>
+        <HomeTemplate path="*" component={PageNotFound} />
 
       </Switch>
-  
-    </BrowserRouter>
+
+    </>
   );
 }
 

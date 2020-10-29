@@ -6,7 +6,9 @@ import * as Yup from 'yup';
 import {connect} from 'react-redux';
 import { USER_SIGNIN_API } from '../../../redux/constants/Cyberbugs/Cyberbugs';
 import { singinCyberbugAction } from '../../../redux/actions/CyberBugsActions';
- function LoginCyberBugs(props) {
+function LoginCyberBugs(props) {
+
+
 
     const {
         values,
@@ -20,7 +22,7 @@ import { singinCyberbugAction } from '../../../redux/actions/CyberBugsActions';
     return (
         <form onSubmit={handleSubmit} className="container" style={{ height: window.innerHeight }} >
             <div className="d-flex flex-column justify-content-center align-items-center" style={{ height: window.innerHeight }} >
-                <h3 className="text-center" style={{fontWeight:300,fontSize:35}}> </h3>
+                <h3 className="text-center" style={{fontWeight:300,fontSize:35}}>Login cyberbugs</h3>
                 <div className="d-flex mt-3" >
                     <Input onChange={handleChange} style={{ width: '100%', minWidth: 300 }} name="email" size="large" placeholder="email" prefix={<UserOutlined />} />     
                 </div> 
@@ -66,14 +68,15 @@ const LoginCyberBugsWithFormik =  withFormik({
         //         password:values.password
         //     }
         // }
-        // setSubmitting(true);
+
+        setSubmitting(true);
         props.dispatch(singinCyberbugAction(email,password));
         
         // console.log(props)
         // console.log(values);
 
     },
-    displayName: 'Login CyberBugs',
+    displayName: 'LoginCyberBugs',
   })(LoginCyberBugs);
 
 
