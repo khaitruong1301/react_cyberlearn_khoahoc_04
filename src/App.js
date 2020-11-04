@@ -19,6 +19,9 @@ import TodolistRFC from './pages/Todolist/TodolistRFC';
 import { HomeTemplate } from './templates/HomeTemplate/HomeTemplate';
 import { UserLoginTemplate } from './templates/HomeTemplate/UserLoginTemplate';
 import { useDispatch } from 'react-redux';
+import { CyberbugsTemplate } from './templates/HomeTemplate/CyberbugsTemplate';
+import indexCyberBugs from './redux/sagas/Cyberbugs/indexCyberBugs';
+import CreateProject from './pages/CyberBugs/CreateProject/CreateProject';
 
 function App() {
 
@@ -31,7 +34,7 @@ function App() {
 
   return (
     <>
-      <Modal />
+      {/* <Modal /> */}
       <LoadingComponent />
       <Switch>
 
@@ -53,6 +56,8 @@ function App() {
         <HomeTemplate exact path='/todolistredux' Component={ToDoListRedux} />
         <HomeTemplate exact path='/todolistsaga' Component={BaiTapToDoListSaga} />
         <HomeTemplate exact path='/demohocmodal' Component={DemoHOCModal} />
+        <CyberbugsTemplate exact path='/cyberbugs' Component={indexCyberBugs} />
+        <CyberbugsTemplate exact path='/createproject' Component={CreateProject} />
         <HomeTemplate exact path='/' component={Home} />
         <HomeTemplate path="*" component={PageNotFound} />
 
