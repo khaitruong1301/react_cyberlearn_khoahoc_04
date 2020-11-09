@@ -10,16 +10,17 @@ import createMiddleWareSaga from 'redux-saga';
 import { rootSaga } from './sagas/rootSaga';
 import { HistoryReducer } from './reducers/HistoryReducer';
 import { UserLoginCyberBugsReducer } from './reducers/UserCyberBugsReducer';
+import { ProjectCategoryReducer } from './reducers/ProjectCategoryReducer';
+
 const middleWareSaga = createMiddleWareSaga();
-
-
 const rootReducer = combineReducers({
     //reducer khai báo tại đây
     ToDoListReducer,
     LoadingReducer,
     ModalReducer,
     HistoryReducer,
-    UserLoginCyberBugsReducer
+    UserLoginCyberBugsReducer,
+    ProjectCategoryReducer
 })
 
 const store = createStore(rootReducer,applyMiddleware(reduxThunk,middleWareSaga));

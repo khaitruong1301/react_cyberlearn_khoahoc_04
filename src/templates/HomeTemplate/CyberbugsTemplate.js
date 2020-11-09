@@ -17,7 +17,7 @@ export const CyberbugsTemplate = (props) => {
     const { Component, ...restParam } = props;
     return <Route {...restParam} render={(propsRoute) => {
         return <>
-            <div class="jira">
+            <div className="jira">
                 <SidebarCyberbugs />
                 <MenuCyberbugs />
                     <Component {...propsRoute} />

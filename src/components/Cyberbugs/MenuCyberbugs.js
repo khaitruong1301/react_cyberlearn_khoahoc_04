@@ -6,7 +6,7 @@ export default function MenuCyberbugs() {
         <div className="menu">
             <div className="account">
                 <div className="avatar">
-                    <img src={require("../../assets/img/download.jfif")} alt />
+                    <img src={require("../../assets/img/download.jfif")} alt="123" />
                 </div>
                 <div className="account-info">
                     <p>CyberLearn.vn</p>
