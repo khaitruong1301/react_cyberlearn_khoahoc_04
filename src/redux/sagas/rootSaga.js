@@ -6,6 +6,7 @@ import * as ToDoListSaga from './ToDoListSaga'
 import * as Cyberbugs from './Cyberbugs/UserCyberbugsSaga';
 import * as ProjectCategorySaga from './Cyberbugs/ProjectCategorySaga';
 import * as ProjectSaga from './Cyberbugs/ProjectSaga'
+import { ProjectCyberBugsReducer } from "../reducers/ProjectCyberBugsReducer";
 export function* rootSaga() {
 
   yield all([
@@ -19,8 +20,8 @@ export function* rootSaga() {
     //Nghiệp vụ cyberbugs .... ,
     Cyberbugs.theoDoiSignin(),
     ProjectCategorySaga.theoDoigetAllProjectCategory(),
-    ProjectSaga.theoDoiCreateProjectSaga()
-    
+    ProjectSaga.theoDoiCreateProjectSaga(),
+    ProjectSaga.theoDoiGetListProjectSaga()
   ])
 
 
