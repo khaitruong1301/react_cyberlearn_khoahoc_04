@@ -54,6 +54,7 @@ export default function ProjectManagement(props) {
             title: 'id',
             dataIndex: 'id',
             key: 'id',
+            sorter: (a, b) => a.id - b.id,
 
 
         },
@@ -61,6 +62,12 @@ export default function ProjectManagement(props) {
             title: 'projectName',
             dataIndex: 'projectName',
             key: 'projectName',
+            sorter: (a, b) => {
+                if(a.projectName?.trim().toLowerCase() > b.projectName?.trim().toLowerCase()){
+                    return -1;
+                }
+                return 1;
+            },
 
         },
         // {
