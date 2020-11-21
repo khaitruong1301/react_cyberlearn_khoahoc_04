@@ -1,8 +1,8 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Table, Tag, Space, Button } from 'antd';
 import ReactHtmlParser from "react-html-parser";
 import { FormOutlined, DeleteOutlined } from '@ant-design/icons'
-import {useSelector,useDispatch} from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
 export default function ProjectManagement(props) {
     //Lấy dữ liệu từ reducer về component
@@ -14,9 +14,9 @@ export default function ProjectManagement(props) {
         sortedInfo: null,
     });
 
-    useEffect(()=>{
-        dispatch({type:'GET_LIST_PROJECT_SAGA'})
-    },[])
+    useEffect(() => {
+        dispatch({ type: 'GET_LIST_PROJECT_SAGA' })
+    }, [])
 
     const handleChange = (pagination, filters, sorter) => {
         console.log('Various parameters', pagination, filters, sorter);
@@ -54,20 +54,26 @@ export default function ProjectManagement(props) {
             title: 'id',
             dataIndex: 'id',
             key: 'id',
-            sorter: (a, b) => a.id - b.id,
-
+            sorter: (item2, item1) => {
+                return item2.id - item1.id;
+            },
+            sortDirections: ['descend'],
 
         },
         {
             title: 'projectName',
             dataIndex: 'projectName',
             key: 'projectName',
-            sorter: (a, b) => {
-                if(a.projectName?.trim().toLowerCase() > b.projectName?.trim().toLowerCase()){
+            sorter: (item2, item1) => {
+                let projectName1 = item1.projectName?.trim().toLowerCase();
+                let projectName2 = item2.projectName?.trim().toLowerCase();
+                if (projectName2 < projectName1)
+                {
                     return -1;
                 }
                 return 1;
             },
+
 
         },
         // {
@@ -82,19 +88,39 @@ export default function ProjectManagement(props) {
         //         </div>
         //     }
         // },
-        
+
         {
-            title:'category',
+            title: 'category',
             dataIndex: 'categoryName',
-            key:'categoryName'
+            key: 'categoryName',
+            sorter: (item2, item1) => {
+                let categoryName1 = item1.categoryName?.trim().toLowerCase();
+                let categoryName2 = item2.categoryName?.trim().toLowerCase();
+                if (categoryName2 < categoryName1)
+                {
+                    return -1;
+                }
+                return 1;
+            },
+
         },
         {
-            title:'creator',
+            title: 'creator',
             // dataIndex: 'creator',
-            key:'creator',
-            render:(text,record,index) => {
-             return  <Tag color="green">{record.creator?.name}</Tag>
-            }
+            key: 'creator',
+            render: (text, record, index) => {
+                return <Tag color="green">{record.creator?.name}</Tag>
+            },
+            sorter: (item2, item1) => {
+                let creator1 = item1.creator?.name.trim().toLowerCase();
+                let creator2 = item2.creator?.name.trim().toLowerCase();
+                if (creator2 < creator1)
+                {
+                    return -1;
+                }
+                return 1;
+            },
+
         },
         {
             title: 'Action',
@@ -103,10 +129,10 @@ export default function ProjectManagement(props) {
             render: (text, record, index) => {
                 return <div>
                     <button className="btn mr-2 btn-primary">
-                        <FormOutlined  style={{fontSize:17}}/>
+                        <FormOutlined style={{ fontSize: 17 }} />
                     </button>
                     <button className="btn btn-danger">
-                        <DeleteOutlined style={{fontSize:17}} />
+                        <DeleteOutlined style={{ fontSize: 17 }} />
                     </button>
                 </div>
             },
