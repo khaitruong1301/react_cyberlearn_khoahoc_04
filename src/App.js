@@ -23,6 +23,7 @@ import { CyberbugsTemplate } from './templates/HomeTemplate/CyberbugsTemplate';
 import indexCyberBugs from './redux/sagas/Cyberbugs/indexCyberBugs';
 import CreateProject from './pages/CyberBugs/CreateProject/CreateProject';
 import ProjectManagement from './pages/CyberBugs/ProjectManagement/ProjectManagement';
+import DrawerCyberBugs from './HOC/CyberbugsHOC/DrawerCyberBugs';
 
 function App() {
 
@@ -37,6 +38,7 @@ function App() {
     <>
       {/* <Modal /> */}
       <LoadingComponent />
+      <DrawerCyberBugs />
       <Switch>
 
         {/* <Route exact path='/home'  render={(propsRoute)=>{
