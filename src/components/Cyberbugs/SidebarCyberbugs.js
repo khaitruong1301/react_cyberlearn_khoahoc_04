@@ -1,27 +1,42 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { Layout, Menu } from 'antd';
+import {
+    MenuUnfoldOutlined,
+    MenuFoldOutlined,
+    UserOutlined,
+    VideoCameraOutlined,
+    UploadOutlined,
+    BarsOutlined,
+    SearchOutlined,
+    PlusOutlined
+} from '@ant-design/icons';
 
+const { Header, Sider, Content } = Layout;
 export default function SidebarCyberbugs() {
+    const [state, setState] = useState({
+        collapsed: false,
+    })
+    const toggle = () => {
+        setState({
+            collapsed: !state.collapsed,
+        });
+    };
     return (
-        <div className="sideBar">
-            <div className="sideBar-top">
-                <div className="sideBar-icon">
-                    <i className="fab fa-jira text-white" />
-                </div>
-                <div className="sideBar-icon" data-toggle="modal" data-target="#searchModal" style={{ cursor: 'pointer' }}>
-                    <i className="fa fa-search text-white mr-2" />
-                    <span className="title"> SEARCH ISSUES</span>
-                </div>
-                <div className="sideBar-icon">
-                    <i className="fa fa-plus text-white mr-2" />
-                    <span className="title"> CREATE ISSUES</span>
-                </div>
-            </div>
-            <div className="sideBar-bottom">
-                <div className="sideBar-icon text-white">
-                    <i className="fa fa-question-circle" />
-                    <span className="title"> ABOUT</span>
-                </div>
-            </div>
+        <div>
+
+            <Sider trigger={null} collapsible collapsed={state.collapsed} style={{ height: '100%' }}>
+                <div className="text-right pr-2" onClick={toggle} ><BarsOutlined style={{ cursor: 'pointer', color: '#fff', fontSize: 25 }} /></div>
+
+                <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
+                    <Menu.Item key="1" icon={<PlusOutlined style={{ fontSize: 20 }} />} >
+                        <span className="mb-2">Create issue</span>
+                    </Menu.Item>
+                    <Menu.Item key="2" icon={<SearchOutlined style={{ fontSize: 20 }} />}>
+                        Search
+                     </Menu.Item>
+
+                </Menu>
+            </Sider>
         </div>
 
 
