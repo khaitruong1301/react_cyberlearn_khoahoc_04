@@ -88,11 +88,12 @@ function FormEditProject(props) {
                         <Editor
 
                             name="description123"
-                            initialValue={values.categoryId}
+                            initialValue={values.description}
+                            value = {values.description}
                             init={{
                                 selector: 'textarea#myTextArea',
                                 height: 500,
-
+                            
                                 menubar: false,
                                 plugins: [
                                     'advlist autolink lists link image charmap print preview anchor',
@@ -135,8 +136,16 @@ const EditProjectForm = withFormik({
     }),
     handleSubmit: (values, { props, setSubmitting }) => {
 
-        console.log('values', values);
-
+        //Khi người dùng bấm submit => đưa dữ liệu về backedn thông qua api
+        // const action = {
+        //     type:'UPDATE_PROJECT_SAGA',
+        //     prjectUpdate:values
+        // }
+        //Gọi saga
+        props.dispatch({
+            type:'UPDATE_PROJECT_SAGA',
+            prjectUpdate:values
+        })
 
     },
     displayName: 'EditProjectForm',
@@ -147,6 +156,7 @@ const mapStateToProps = (state) => ({
     projectEdit: state.ProjectReducer.projectEdit
 
 })
+
 
 
 export default connect(mapStateToProps)(EditProjectForm);
