@@ -24,6 +24,7 @@ import indexCyberBugs from './redux/sagas/Cyberbugs/indexCyberBugs';
 import CreateProject from './pages/CyberBugs/CreateProject/CreateProject';
 import ProjectManagement from './pages/CyberBugs/ProjectManagement/ProjectManagement';
 import DrawerCyberBugs from './HOC/CyberbugsHOC/DrawerCyberBugs';
+import NotificationComponent from './components/Notification/NotificationComponent';
 
 function App() {
 
@@ -35,7 +36,7 @@ function App() {
 
 
   return (
-    <>
+    <div>
       {/* <Modal /> */}
       <LoadingComponent />
       <DrawerCyberBugs />
@@ -67,7 +68,7 @@ function App() {
 
       </Switch>
 
-    </>
+    </div>
   );
 }
 

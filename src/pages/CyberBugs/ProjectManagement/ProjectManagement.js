@@ -4,6 +4,9 @@ import ReactHtmlParser from "react-html-parser";
 import { FormOutlined, DeleteOutlined } from '@ant-design/icons'
 import { useSelector, useDispatch } from 'react-redux'
 import FormEditProject from '../../../components/Forms/FormEditProject.js/FormEditProject';
+import { Popconfirm, message } from 'antd';
+
+
 
 export default function ProjectManagement(props) {
     //Lấy dữ liệu từ reducer về component
@@ -68,8 +71,7 @@ export default function ProjectManagement(props) {
             sorter: (item2, item1) => {
                 let projectName1 = item1.projectName?.trim().toLowerCase();
                 let projectName2 = item2.projectName?.trim().toLowerCase();
-                if (projectName2 < projectName1)
-                {
+                if (projectName2 < projectName1) {
                     return -1;
                 }
                 return 1;
@@ -97,8 +99,7 @@ export default function ProjectManagement(props) {
             sorter: (item2, item1) => {
                 let categoryName1 = item1.categoryName?.trim().toLowerCase();
                 let categoryName2 = item2.categoryName?.trim().toLowerCase();
-                if (categoryName2 < categoryName1)
-                {
+                if (categoryName2 < categoryName1) {
                     return -1;
                 }
                 return 1;
@@ -115,8 +116,7 @@ export default function ProjectManagement(props) {
             sorter: (item2, item1) => {
                 let creator1 = item1.creator?.name.trim().toLowerCase();
                 let creator2 = item2.creator?.name.trim().toLowerCase();
-                if (creator2 < creator1)
-                {
+                if (creator2 < creator1) {
                     return -1;
                 }
                 return 1;
@@ -129,26 +129,37 @@ export default function ProjectManagement(props) {
             key: 'x',
             render: (text, record, index) => {
                 return <div>
-                    <button className="btn mr-2 btn-primary"  onClick={()=>{
-                            const action = {
-                                type:'OPEN_FORM_EDIT_PROJECT',
-                                Component: <FormEditProject />,
-                            }
+                    <button className="btn mr-2 btn-primary" onClick={() => {
+                        const action = {
+                            type: 'OPEN_FORM_EDIT_PROJECT',
+                            Component: <FormEditProject />,
+                        }
 
-                            //dispatch lên reducer nội dung drawer
-                            dispatch(action);
-                            //dispatch dữ liệu dòng hiện tai lên reducer
-                            const actionEditProject = {
-                                type:'EDIT_PROJECT',
-                                projectEditModel: record
-                            }
-                            dispatch(actionEditProject);
-                        }}>
-                        <FormOutlined style={{ fontSize: 17 }}/>
+                        //dispatch lên reducer nội dung drawer
+                        dispatch(action);
+                        //dispatch dữ liệu dòng hiện tai lên reducer
+                        const actionEditProject = {
+                            type: 'EDIT_PROJECT',
+                            projectEditModel: record
+                        }
+                        dispatch(actionEditProject);
+                    }}>
+                        <FormOutlined style={{ fontSize: 17 }} />
                     </button>
-                    <button className="btn btn-danger">
-                        <DeleteOutlined style={{ fontSize: 17 }} />
-                    </button>
+                    <Popconfirm
+                        title="Are you sure to delete this project?"
+                        onConfirm={() => {
+                            dispatch({ type: 'DELETE_PROJECT_SAGA', idProject: record.id })
+                        }}
+                       
+                        okText="Yes"
+                        cancelText="No"
+                    >
+                        <button className="btn btn-danger">
+                            <DeleteOutlined style={{ fontSize: 17 }} />
+                        </button>
+                    </Popconfirm>,
+
                 </div>
             },
         }
