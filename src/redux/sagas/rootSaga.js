@@ -19,11 +19,14 @@ export function* rootSaga() {
     
     //Nghiệp vụ cyberbugs .... ,
     Cyberbugs.theoDoiSignin(),
+    Cyberbugs.theoDoiGetUser(),
     ProjectCategorySaga.theoDoigetAllProjectCategory(),
     ProjectSaga.theoDoiCreateProjectSaga(),
     ProjectSaga.theoDoiGetListProjectSaga(),
     ProjectSaga.theoDoiUpdateProjectSaga(),
-    ProjectSaga.theoDoiDeleteProject()
+    ProjectSaga.theoDoiDeleteProject(),
+    
+    
   ])
 
 

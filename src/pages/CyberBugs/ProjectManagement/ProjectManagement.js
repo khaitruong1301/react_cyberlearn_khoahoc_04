@@ -10,6 +10,8 @@ import FormEditProject from '../../../components/Forms/FormEditProject.js/FormEd
 export default function ProjectManagement(props) {
     //Lấy dữ liệu từ reducer về component
     const projectList = useSelector(state => state.ProjectCyberBugsReducer.projectList);
+
+    const {userSearch} = useSelector(state=>state.UserLoginCyberBugsReducer)
     //Sử dụng useDispatch để gọi action
     const dispatch = useDispatch();
     const [state, setState] = useState({
@@ -134,7 +136,24 @@ export default function ProjectManagement(props) {
                     {record.members?.length > 3 ? <Avatar>...</Avatar> : ''}
 
                     <Popover placement="rightTop" title={"Add user"} content={()=> {
-                        return <AutoComplete style={{width:'100%'}} />
+                        return <AutoComplete 
+                        
+                        options={userSearch?.map((user,index)=>{
+                            return {label:user.name,value:user.userId}
+                        })}
+
+
+                        onSelect={(value,option)=> {
+                            console.log('userId',value);
+                            console.log('option',option)
+                        }}
+                        style={{width:'100%'}} onSearch={(value) => {
+                            dispatch({
+                                type:'GET_USER_API',
+                                keyWord:value
+                            })
+
+                        }} />
                     }} trigger="click">
                         <Button style={{borderRadius:'50%'}}>+</Button>
                     </Popover>
