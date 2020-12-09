@@ -78,3 +78,28 @@ export function* theoDoiGetUser () {
     yield takeLatest("GET_USER_API", getUserSaga);
 }
 
+
+
+
+
+//Quản lý các action saga
+function* addUserProjectSaga(action) {
+    
+   
+    try {
+        const { data, status } = yield call(() => userService.assignUserProject(action.userProject));
+        
+        yield put({
+            type:'GET_LIST_PROJECT_SAGA'
+        })
+      
+    }catch(err){ 
+        console.log(err.response.data)
+    }
+}
+
+
+
+export function* theoDoiAddUserProject () {
+    yield takeLatest("ADD_USER_PROJECT_API", addUserProjectSaga);
+}

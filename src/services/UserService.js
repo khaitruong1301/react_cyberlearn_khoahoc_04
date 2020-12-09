@@ -12,6 +12,11 @@ export class UserService extends baseService {
     }
 
 
+    assignUserProject = (userProject) => {
+        return this.post(`Project/assignUserProject`,userProject);
+    }
+
+
 }
 
 

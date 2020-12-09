@@ -11,7 +11,11 @@ export default function ProjectManagement(props) {
     //Lấy dữ liệu từ reducer về component
     const projectList = useSelector(state => state.ProjectCyberBugsReducer.projectList);
 
-    const {userSearch} = useSelector(state=>state.UserLoginCyberBugsReducer)
+    const {userSearch} = useSelector(state=>state.UserLoginCyberBugsReducer);
+
+    const [value,setValue] = useState('');
+
+
     //Sử dụng useDispatch để gọi action
     const dispatch = useDispatch();
     const [state, setState] = useState({
@@ -139,13 +143,28 @@ export default function ProjectManagement(props) {
                         return <AutoComplete 
                         
                         options={userSearch?.map((user,index)=>{
-                            return {label:user.name,value:user.userId}
+                            return {label:user.name,value:user.userId.toString()}
                         })}
 
+                        value={value}
+                        
+                        onChange={(text) => {
+                            setValue(text);
+                        }}
 
-                        onSelect={(value,option)=> {
-                            console.log('userId',value);
-                            console.log('option',option)
+                        onSelect={(valueSelect,option)=> {
+                           //set giá trị của hộp thọa = option.label
+                           setValue(option.label);
+                           //Gọi api gửi về backend
+                           dispatch({
+                               type:'ADD_USER_PROJECT_API',
+                               userProject: {
+                                "projectId": record.id,
+                                "userId": valueSelect
+                              }
+                           })
+
+
                         }}
                         style={{width:'100%'}} onSearch={(value) => {
                             dispatch({
