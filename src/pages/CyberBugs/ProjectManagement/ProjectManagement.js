@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { Table, Tag, Space, Button, Avatar, Popconfirm, message,Popover, AutoComplete } from 'antd';
+import { Table, Tag, Space, Button, Avatar, Popconfirm, message, Popover, AutoComplete } from 'antd';
 import ReactHtmlParser from "react-html-parser";
-import { FormOutlined, DeleteOutlined } from '@ant-design/icons'
+import { FormOutlined, DeleteOutlined,CloseSquareOutlined } from '@ant-design/icons'
 import { useSelector, useDispatch } from 'react-redux'
 import FormEditProject from '../../../components/Forms/FormEditProject.js/FormEditProject';
 
@@ -11,9 +11,9 @@ export default function ProjectManagement(props) {
     //Lấy dữ liệu từ reducer về component
     const projectList = useSelector(state => state.ProjectCyberBugsReducer.projectList);
 
-    const {userSearch} = useSelector(state=>state.UserLoginCyberBugsReducer);
+    const { userSearch } = useSelector(state => state.UserLoginCyberBugsReducer);
 
-    const [value,setValue] = useState('');
+    const [value, setValue] = useState('');
 
 
     //Sử dụng useDispatch để gọi action
@@ -134,47 +134,83 @@ export default function ProjectManagement(props) {
             render: (text, record, index) => {
                 return <div>
                     {record.members?.slice(0, 3).map((member, index) => {
-                        return <Avatar key={index} src={member.avatar} />
+                        return (
+                            <Popover key={index} placement="top" title="members" content={() => {
+                                return <table className="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>avatar</th>
+                                            <th>name</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {record.members?.map((item, index) => {
+                                            return <tr key={index}>
+                                                <td>{item.userId}</td>
+                                                <td><img src={item.avatar} width="30" height="30" style={{borderRadius:'15px'}} /></td>
+                                                <td>{item.name}</td>
+                                                <td>
+                                                    <button onClick={()=>{
+                                                        dispatch({
+                                                            type:'REMOVE_USER_PROJECT_API',
+                                                            userProject: {
+                                                                userId:item.userId,
+                                                                projectId: record.id
+                                                            }
+                                                        })
+
+                                                    }} className="btn btn-danger" style={{borderRadius:'50%'}}>X</button>
+                                                </td>
+                                            </tr>
+                                        })}
+                                    </tbody>
+                                </table>
+                            }}>
+                                <Avatar key={index} src={member.avatar} />
+                            </Popover>
+                        )
                     })}
 
                     {record.members?.length > 3 ? <Avatar>...</Avatar> : ''}
 
-                    <Popover placement="rightTop" title={"Add user"} content={()=> {
-                        return <AutoComplete 
-                        
-                        options={userSearch?.map((user,index)=>{
-                            return {label:user.name,value:user.userId.toString()}
-                        })}
+                    <Popover placement="rightTop" title={"Add user"} content={() => {
+                        return <AutoComplete
 
-                        value={value}
-                        
-                        onChange={(text) => {
-                            setValue(text);
-                        }}
+                            options={userSearch?.map((user, index) => {
+                                return { label: user.name, value: user.userId.toString() }
+                            })}
 
-                        onSelect={(valueSelect,option)=> {
-                           //set giá trị của hộp thọa = option.label
-                           setValue(option.label);
-                           //Gọi api gửi về backend
-                           dispatch({
-                               type:'ADD_USER_PROJECT_API',
-                               userProject: {
-                                "projectId": record.id,
-                                "userId": valueSelect
-                              }
-                           })
+                            value={value}
+
+                            onChange={(text) => {
+                                setValue(text);
+                            }}
+
+                            onSelect={(valueSelect, option) => {
+                                //set giá trị của hộp thọa = option.label
+                                setValue(option.label);
+                                //Gọi api gửi về backend
+                                dispatch({
+                                    type: 'ADD_USER_PROJECT_API',
+                                    userProject: {
+                                        "projectId": record.id,
+                                        "userId": valueSelect
+                                    }
+                                })
 
 
-                        }}
-                        style={{width:'100%'}} onSearch={(value) => {
-                            dispatch({
-                                type:'GET_USER_API',
-                                keyWord:value
-                            })
+                            }}
+                            style={{ width: '100%' }} onSearch={(value) => {
+                                dispatch({
+                                    type: 'GET_USER_API',
+                                    keyWord: value
+                                })
 
-                        }} />
+                            }} />
                     }} trigger="click">
-                        <Button style={{borderRadius:'50%'}}>+</Button>
+                        <Button style={{ borderRadius: '50%' }}>+</Button>
                     </Popover>
                 </div>
             }
@@ -216,7 +252,7 @@ export default function ProjectManagement(props) {
                         <button className="btn btn-danger">
                             <DeleteOutlined style={{ fontSize: 17 }} />
                         </button>
-                    </Popconfirm>,
+                    </Popconfirm>
 
                 </div>
             },

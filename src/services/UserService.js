@@ -17,6 +17,9 @@ export class UserService extends baseService {
     }
 
 
+    deleteUserFromProject = (userProject) => {
+        return this.post(`Project/removeUserFromProject`,userProject);
+    } 
 }
 
 
