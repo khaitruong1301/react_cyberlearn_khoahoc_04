@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Table, Tag, Space, Button, Avatar, Popconfirm, message, Popover, AutoComplete } from 'antd';
 import ReactHtmlParser from "react-html-parser";
 import { FormOutlined, DeleteOutlined,CloseSquareOutlined } from '@ant-design/icons'
@@ -15,6 +15,7 @@ export default function ProjectManagement(props) {
 
     const [value, setValue] = useState('');
 
+    const searchRef = useRef(null);
 
     //Sử dụng useDispatch để gọi action
     const dispatch = useDispatch();
@@ -203,11 +204,18 @@ export default function ProjectManagement(props) {
 
                             }}
                             style={{ width: '100%' }} onSearch={(value) => {
-                                dispatch({
-                                    type: 'GET_USER_API',
-                                    keyWord: value
-                                })
-
+                                    
+                                if(searchRef.current) {
+                                    clearTimeout(searchRef.current);
+                                }
+                                searchRef.current = setTimeout(()=>{
+                                    dispatch({
+                                        type: 'GET_USER_API',
+                                        keyWord: value
+                                    })
+    
+                                },300)
+                               
                             }} />
                     }} trigger="click">
                         <Button style={{ borderRadius: '50%' }}>+</Button>

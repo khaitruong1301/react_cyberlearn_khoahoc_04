@@ -57,7 +57,7 @@ export function* theoDoiSignin() {
 function* getUserSaga(action) {
     
     //action.keyWord
-
+ console.log("keyword",action.keyWord);
     //Gọi api 
     try {
         const { data, status } = yield call(() => userService.getUser(action.keyWord));
@@ -66,6 +66,7 @@ function* getUserSaga(action) {
             type:'GET_USER_SEARCH',
             lstUserSearch: data.content
         })
+ console.log("data",data);
       
     }catch(err){ 
         console.log(err.response.data)
