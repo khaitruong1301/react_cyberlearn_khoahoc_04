@@ -13,23 +13,24 @@ export default function IndexCyberBugs(props) {
 
     console.log('projectDetail',projectDetail)
 
+
     useEffect(()=>{
         //Khi người dùng link qua trang này bằng thẻ navlink hoặc người dùng tự gõ url thì ta sẽ lấy tham số từ url => gọi saga
         const {projectId} = props.match.params;
         dispatch({
             type:'GET_PROJECT_DETAIL',
             projectId
-        })
-        
+        });
     },[])
+
 
     return (
         <div className="main">
-            <HeaderMain />
+            <HeaderMain projectDetail={projectDetail} />
 
-            <InfoMain />
+            <InfoMain projectDetail={projectDetail} />
 
-            <ContentMain />
+            <ContentMain projectDetail={projectDetail} />
         </div>
 
     )
