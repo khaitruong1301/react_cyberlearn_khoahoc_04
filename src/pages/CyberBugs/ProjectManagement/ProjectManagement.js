@@ -238,6 +238,7 @@ export default function ProjectManagement(props) {
                     <button className="btn mr-2 btn-primary" onClick={() => {
                         const action = {
                             type: 'OPEN_FORM_EDIT_PROJECT',
+                            title:'Edit Project',
                             Component: <FormEditProject />,
                         }
 

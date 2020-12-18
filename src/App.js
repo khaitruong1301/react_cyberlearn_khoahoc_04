@@ -66,7 +66,7 @@ function App() {
         <CyberbugsTemplate exact path='/projectdetail/:projectId' Component={indexCyberBugs} />
         <CyberbugsTemplate exact path='/' Component={ProjectManagement} />
         <HomeTemplate path="*" component={PageNotFound} />
-
+        
       </Switch>
 
     </div>

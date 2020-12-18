@@ -9,7 +9,7 @@ export default function DrawerCyberBugs(props) {
 
 
 
-    const { visible, ComponentContentDrawer,callBackSubmit } = useSelector(state => state.drawerReducer);
+    const { visible, ComponentContentDrawer,callBackSubmit,title } = useSelector(state => state.drawerReducer);
 
     const dispatch = useDispatch();
 
@@ -28,7 +28,7 @@ export default function DrawerCyberBugs(props) {
         <>
             {/* <button onClick={showDrawer}>showdrawer</button> */}
             <Drawer
-                title="Create a new account"
+                title={title}
                 width={720}
                 onClose={onClose}
                 visible={visible}
