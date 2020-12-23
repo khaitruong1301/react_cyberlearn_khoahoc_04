@@ -5,8 +5,9 @@ import * as ToDoListSaga from './ToDoListSaga'
 // import {theoDoiActionGetTaskApi} from './ToDoListSaga'
 import * as Cyberbugs from './Cyberbugs/UserCyberbugsSaga';
 import * as ProjectCategorySaga from './Cyberbugs/ProjectCategorySaga';
-import * as ProjectSaga from './Cyberbugs/ProjectSaga'
-import { ProjectCyberBugsReducer } from "../reducers/ProjectCyberBugsReducer";
+import * as ProjectSaga from './Cyberbugs/ProjectSaga';
+import * as TaskTypeSaga from './Cyberbugs/TaskTypeSaga';
+import * as PrioritySaga from './Cyberbugs/PrioritySaga';
 export function* rootSaga() {
 
   yield all([
@@ -27,7 +28,14 @@ export function* rootSaga() {
     ProjectSaga.theoDoiGetListProjectSaga(),
     ProjectSaga.theoDoiUpdateProjectSaga(),
     ProjectSaga.theoDoiDeleteProject(),
-    ProjectSaga.theoDoiGetProjectDetail()
+    ProjectSaga.theoDoiGetProjectDetail(),
+    ProjectSaga.theoDoiGetAllProjectSaga(),
+
+
+    TaskTypeSaga.theoDoiGetAllTaskTypeSaga(),
+    PrioritySaga.theoDoiGetAllPriority()
+
+
     
     
   ])

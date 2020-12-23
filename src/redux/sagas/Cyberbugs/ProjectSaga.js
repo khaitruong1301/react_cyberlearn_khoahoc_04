@@ -5,6 +5,7 @@ import { DISPLAY_LOADING, HIDE_LOADING } from "../../constants/LoadingConst";
 import {history} from '../../../util/history';
 import { projectService } from "../../../services/ProjectService";
 import { notifiFunction } from "../../../util/Notification/notificationCyberbugs";
+import { GET_ALL_PROJECT, GET_ALL_PROJECT_SAGA } from "../../constants/Cyberbugs/ProjectCyberBugsConstants";
 function* createProjectSaga(action) {
 
     console.log('actionCreateProject',action)
@@ -195,3 +196,39 @@ function* getProjectDetailSaga(action) {
 export function* theoDoiGetProjectDetail() {
     yield takeLatest('GET_PROJECT_DETAIL', getProjectDetailSaga);
 }
+
+
+
+function* getProjectAllSaga(action) {
+    // console.log('action123',action);
+    // return;
+    //HIỂN THỊ LOADING
+    yield put({
+        type: DISPLAY_LOADING
+    })
+    yield delay (500);
+
+    try {
+        const { data, status } = yield call(() => projectService.getAllProject());
+        
+      
+        //Lấy dữ liệu thành công thì đưa dữ liệu lên redux
+        yield put({
+            type:GET_ALL_PROJECT,
+            arrProject:data.content
+        })
+    
+    } catch (err) {
+        console.log('404 not found !')
+        history.push('/projectmanagement');
+    }
+   
+    yield put({
+        type: HIDE_LOADING
+    })
+}
+
+export function* theoDoiGetAllProjectSaga() {
+    yield takeLatest(GET_ALL_PROJECT_SAGA, getProjectAllSaga);
+}
+
