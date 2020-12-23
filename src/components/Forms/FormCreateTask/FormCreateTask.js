@@ -96,6 +96,7 @@ export default function FormCreateTask(props) {
                                     })
                                 }}/>
                             </div>
+                            
                             <div className="col-6">
                                 <p>Time remaining</p>
                                 <input type="number" defaultValue="0" min="0" className="form-control" name="timeTrackingRemaining"  onChange={(e)=>{
