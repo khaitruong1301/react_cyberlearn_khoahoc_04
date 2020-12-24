@@ -13,7 +13,9 @@ if(localStorage.getItem(USER_LOGIN)) {
 
 const stateDefault =  {
     userLogin : usLogin,
-    userSearch: []
+    userSearch: [],
+    // arrUser:[]//Array user cho thẻ select create task
+
 }
 
 

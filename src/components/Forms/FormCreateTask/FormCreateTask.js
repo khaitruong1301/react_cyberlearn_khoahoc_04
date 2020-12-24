@@ -21,6 +21,13 @@ export default function FormCreateTask(props) {
     const {arrProject} = useSelector(state=>state.ProjectCyberBugsReducer);
     const {arrTaskType} = useSelector(state=>state.TaskTypeReducer);
     const {arrPriority} = useSelector(state => state.PriorityReducer);
+    const {userSearch} = useSelector(state => state.UserLoginCyberBugsReducer);
+    //Hàm biến đổi options cho thẻ select
+    const userOptions = userSearch.map((item,index) => {
+        return {value:item.userId,label:item.name}
+    })
+
+
     const dispatch = useDispatch();
 
 
@@ -40,6 +47,8 @@ export default function FormCreateTask(props) {
         dispatch({type:GET_ALL_PROJECT_SAGA});
         dispatch({type:GET_ALL_TASK_TYPE_SAGA});
         dispatch({type:GET_ALL_PRIORITY_SAGA});
+        dispatch({type:'GET_USER_API',keyWord:''});
+
     },[])
 
     const handleEditorChange = (content, editor) => {
@@ -92,10 +101,15 @@ export default function FormCreateTask(props) {
                             
                             mode="multiple"
                             size={size}
-                            options={[{value:'a12',label:'b12'},{value:'a12',label:'b12'},{value:'a12',label:'b12'}]}
+                            options={userOptions}
                             placeholder="Please select"
-                            defaultValue={['a10', 'c12']}
+                            optionFilterProp="label"
                             onChange={handleChange}
+                            onSelect={(value) => { 
+
+                              console.log(value)
+                        
+                            }}
                             style={{ width: '100%' }}
                         >
                             {children}
