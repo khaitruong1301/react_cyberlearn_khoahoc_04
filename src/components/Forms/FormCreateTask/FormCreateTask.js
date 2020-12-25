@@ -1,13 +1,14 @@
 import { Editor } from '@tinymce/tinymce-react'
 import React, { useEffect, useState } from 'react'
 import { Select, Radio,Slider } from 'antd';
-import {useSelector,useDispatch} from 'react-redux'
+import {useSelector,useDispatch,connect} from 'react-redux'
 import { GET_ALL_PROJECT_SAGA } from '../../../redux/constants/Cyberbugs/ProjectCyberBugsConstants';
 import { GET_ALL_TASK_TYPE_SAGA } from '../../../redux/constants/Cyberbugs/TaskTypeConstants';
 import { GET_ALL_PRIORITY_SAGA } from '../../../redux/constants/Cyberbugs/PriorityConstants';
 
+import {withFormik} from 'formik';
 
-
+import * as Yup from 'yup'
 const { Option } = Select;
 
 const children = [];
@@ -15,7 +16,7 @@ const children = [];
 for (let i = 10; i < 36; i++) {
   children.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>);
 }
-export default function FormCreateTask(props) {
+ function FormCreateTask(props) {
 
     //Lấy dữ liệu từ redux 
     const {arrProject} = useSelector(state=>state.ProjectCyberBugsReducer);
@@ -26,7 +27,17 @@ export default function FormCreateTask(props) {
     const userOptions = userSearch.map((item,index) => {
         return {value:item.userId,label:item.name}
     })
-
+    //Do kết nối với withformik => component có các props
+    const {
+        values,
+        touched,
+        errors,
+        handleChange,
+        handleBlur,
+        handleSubmit,
+        setValues,
+        setFieldValue
+    } = props;
 
     const dispatch = useDispatch();
 
@@ -51,30 +62,29 @@ export default function FormCreateTask(props) {
 
     },[])
 
-    const handleEditorChange = (content, editor) => {
-
-    }
-
-    function handleChange(value) {
-        console.log(`Selected: ${value}`);
-      }
+    
+    
 
     const children = [];
     return (
-        <div className="container">          
+        <form className="container" onSubmit={handleSubmit}>          
             <div className="form-group">
                 <p>Project</p>
-                <select name="projectId" className="form-control">
+                <select name="projectId" className="form-control" onChange={handleChange}>
                    {arrProject.map((project,index)=>{
                        return <option key={index} value={project.id}>{project.projectName}</option>
                    })}
                 </select>
             </div>
             <div className="form-group">
+                <p>Task name</p>
+                <input name="taskName" className="form-control" onChange={handleChange} />
+            </div> 
+            <div className="form-group">
                 <div className="row">
                     <div className="col-6">
                         <p>Priority</p>
-                        <select name="priorityId" className="form-control">
+                        <select name="priorityId" className="form-control" onChange={handleChange}>
                             {arrPriority.map((priority,index)=>{
                                 return <option key={index} value={priority.priorityId}>
                                     {priority.priority}
@@ -84,7 +94,7 @@ export default function FormCreateTask(props) {
                     </div>
                     <div className="col-6">
                         <p>Task type</p>
-                        <select className="form-control" name="typeId">
+                        <select className="form-control" name="typeId" onChange={handleChange}>
                             {arrTaskType.map((taskType,index)=>{
                                 return <option key={index} value={taskType.id}>{taskType.taskType}</option>
                             })}
@@ -104,7 +114,9 @@ export default function FormCreateTask(props) {
                             options={userOptions}
                             placeholder="Please select"
                             optionFilterProp="label"
-                            onChange={handleChange}
+                            onChange={(values) => {
+                                setFieldValue('listUserAsign',values);
+                            }}
                             onSelect={(value) => { 
 
                               console.log(value)
@@ -117,7 +129,7 @@ export default function FormCreateTask(props) {
                     <div className="row mt-3">
                         <div className="col-12">
                             <p>Original Estimate</p>
-                            <input type="number" min="0" name="originalEstimate" defaultValue="0" className="form-control" height="30"/>
+                            <input type="number" min="0" name="originalEstimate" defaultValue="0" className="form-control" height="30" onChange={handleChange}/>
                         </div>
                     </div>
 
@@ -137,7 +149,9 @@ export default function FormCreateTask(props) {
                                     setTimetracking({
                                         ...timeTracking,
                                         timeTrackingSpent:e.target.value
-                                    })
+                                    });
+
+                                    setFieldValue('timeTrackingSpent',e.target.value);
                                 }}/>
                             </div>
 
@@ -147,7 +161,9 @@ export default function FormCreateTask(props) {
                                     setTimetracking({
                                         ...timeTracking,
                                         timeTrackingRemaining:e.target.value
-                                    })
+                                    });
+                                    setFieldValue('timeTrackingRemaining',e.target.value);
+
                                 }}/>
                             </div>
                         </div>
@@ -174,9 +190,50 @@ export default function FormCreateTask(props) {
                             alignleft aligncenter alignright alignjustify | \
                             bullist numlist outdent indent | removeformat | help'
                         }}
-                        onEditorChange={handleEditorChange}
+                        onEditorChange={(content, editor) => {
+                            setFieldValue('description',content);
+                        }}
                 />
             </div>
-        </div>
+            <button type="submit">submit</button>
+        </form>
     )
 }
+
+
+
+
+
+const frmCreateTask = withFormik({
+    // enableReinitialize: true,
+    mapPropsToValues: (props) => {
+   
+
+        return {
+            taskName: '',
+            description: '',
+            statusId: 1,
+            originalEstimate: 0,
+            timeTrackingSpent:0,
+            timeTrackingRemaining:0,
+            projectId:0,
+            typeId:0,
+            priorityId:0,
+            listUserAsign:[]
+        }
+    },
+    validationSchema: Yup.object().shape({
+
+
+    }),
+    handleSubmit: (values, { props, setSubmitting }) => {
+        props.dispatch({type:'CREATE_TASK_SAGA',taskObject:values})
+        console.log('taskobject',values)
+    },
+    displayName: 'createTaskForm',
+})(FormCreateTask);
+
+
+
+
+export default connect() (frmCreateTask);
