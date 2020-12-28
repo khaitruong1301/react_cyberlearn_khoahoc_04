@@ -25,6 +25,10 @@ export const drawerReducer = (state = initialState, action) => {
             return {...state};
         }
 
+        case 'SET_SUBMIT_CREATE_TASK' : {
+            return {...state,callBackSubmit:action.submitFunction}
+        }
+
         case 'OPEN_FORM_CREATE_TASK' : {
             state.visible = true;
             state.title = action.title;
@@ -32,6 +36,8 @@ export const drawerReducer = (state = initialState, action) => {
             return {...state};
 
         }
+
+        
 
         default:
             return state
