@@ -2,7 +2,6 @@ import Axios from "axios"
 import { DOMAIN_CYBERBUG, TOKEN } from "../util/constants/settingSystem"
 
 export class baseService {
-
     //put json về phía backend
     put = (url,model) => {
         return  Axios({

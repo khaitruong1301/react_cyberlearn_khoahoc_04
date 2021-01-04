@@ -20,7 +20,7 @@ import { HomeTemplate } from './templates/HomeTemplate/HomeTemplate';
 import { UserLoginTemplate } from './templates/HomeTemplate/UserLoginTemplate';
 import { useDispatch } from 'react-redux';
 import { CyberbugsTemplate } from './templates/HomeTemplate/CyberbugsTemplate';
-import indexCyberBugs from './redux/sagas/Cyberbugs/indexCyberBugs';
+import indexCyberBugs from './pages/CyberBugs/ProjectDetail/indexCyberBugs';
 import CreateProject from './pages/CyberBugs/CreateProject/CreateProject';
 import ProjectManagement from './pages/CyberBugs/ProjectManagement/ProjectManagement';
 import DrawerCyberBugs from './HOC/CyberbugsHOC/DrawerCyberBugs';
