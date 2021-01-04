@@ -40,7 +40,9 @@ export function* rootSaga() {
     TaskTypeSaga.theoDoiGetAllTaskTypeSaga(),
     PrioritySaga.theoDoiGetAllPriority(),
 
-    TaskSaga.theoDoiCreateTaskSaga()
+    TaskSaga.theoDoiCreateTaskSaga(),
+    TaskSaga.theoDoiGetTaskDetailSaga()
+
     
     
   ])

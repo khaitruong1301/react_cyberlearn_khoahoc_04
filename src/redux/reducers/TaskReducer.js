@@ -1,3 +1,5 @@
+import { GET_TASK_DETAIL } from "../constants/Cyberbugs/TaskConstants"
+
 const initialState = {
     taskDetailModal:  {
         "priorityTask": {
@@ -40,7 +42,9 @@ const initialState = {
 export const TaskReducer = (state = initialState,action) => {
     switch (action.type) {
 
-  
+    case GET_TASK_DETAIL: {
+        return {...state,taskDetailModal:action.taskDetailModal}
+    }
 
     default:
         return state
