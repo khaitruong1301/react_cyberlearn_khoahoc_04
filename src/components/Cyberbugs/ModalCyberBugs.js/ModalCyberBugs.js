@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import ReactHtmlParser from "react-html-parser";
 import { GET_ALL_STATUS_SAGA } from '../../../redux/constants/Cyberbugs/StatusConstant';
 import { GET_ALL_PRIORITY_SAGA } from '../../../redux/constants/Cyberbugs/PriorityConstants';
+import { UPDATE_STATUS_TASK_SAGA } from '../../../redux/constants/Cyberbugs/TaskConstants';
 
 export default function ModalCyberBugs(props) {
 
@@ -127,13 +128,29 @@ export default function ModalCyberBugs(props) {
                                     <div className="status">
                                         <h6>STATUS</h6>
                                         <select className="custom-select" value={taskDetailModal.statusId} onChange={(e) => {
+                                            
+                                            const action = {
+                                                type:UPDATE_STATUS_TASK_SAGA,
+                                                taskUpdateStatus: {
+                                                    taskId:taskDetailModal.taskId,
+                                                    statusId:e.target.value,
+                                                    projectId:taskDetailModal.projectId
+                                                    
+                                                }
+                                            }
 
+                                            // // console.log('action',action);
+                                            console.log('taskupdatestatus',{
+                                                taskId:taskDetailModal.taskId,
+                                                statusId:e.target.value
+                                            })
+
+                                            dispatch(action)
+                                        
+                                        
                                         }}>
                                             {arrStatus.map((status, index) => {
-
-
                                                 return <option value={status.statusId} key={index}>{status.statusName}</option>
-
                                             })}
                                         </select>
                                     </div>
@@ -187,7 +204,7 @@ export default function ModalCyberBugs(props) {
                                     </div>
                                     <div className="estimate">
                                         <h6>ORIGINAL ESTIMATE (HOURS)</h6>
-                                        <input type="text" className="estimate-hours" value={taskDetailModal.originalEstimate} />
+                                        <input type="text" className="estimate-hours" value={taskDetailModal.originalEstimate} onChange={(e)=> {}}/>
                                     </div>
                                     <div className="time-tracking">
                                         <h6>TIME TRACKING</h6>

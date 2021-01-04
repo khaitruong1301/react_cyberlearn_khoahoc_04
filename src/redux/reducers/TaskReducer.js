@@ -43,6 +43,7 @@ export const TaskReducer = (state = initialState,action) => {
     switch (action.type) {
 
     case GET_TASK_DETAIL: {
+        console.log(action.taskDetailModal);
         return {...state,taskDetailModal:action.taskDetailModal}
     }
 
