@@ -157,7 +157,7 @@ export default function ModalCyberBugs(props) {
                             <i className="fa fa-bookmark" />
                             <select name="typeId" value={taskDetailModal.typeId} onChange={handleChange}>
                                 {arrTaskType.map((tp, index) => {
-                                    return <option value={tp.id}>{tp.taskType}</option>
+                                    return <option key={index} value={tp.id}>{tp.taskType}</option>
                                 })}
                             </select>
 
@@ -267,7 +267,7 @@ export default function ModalCyberBugs(props) {
                                         <div className="row">
                                             {
                                                 taskDetailModal.assigness?.map((user, index) => {
-                                                    return <div className="col-6  mt-2 mb-2">
+                                                    return <div className="col-6  mt-2 mb-2" key={index}>
                                                         <div key={index} style={{ display: 'flex' }} className="item">
 
 
