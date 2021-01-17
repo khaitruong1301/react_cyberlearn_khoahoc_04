@@ -1,9 +1,6 @@
 import React, { useRef, useState } from 'react';
-
-import { useSpring, animated } from 'react-spring'
-
-import './DemoDragDrop.css'
-
+import './Demo.css';
+import { useSpring, useSprings, animated } from 'react-spring'
 
 const defaultValue = [
     { id: 1, taskName: 'Task 1' },
@@ -14,19 +11,16 @@ const defaultValue = [
 ]
 
 
-export default function DemoDragDrop(props) {
+export default function Demo(props) {
 
     const [taskList, setTaskList] = useState(defaultValue);
-    const tagDrag = useRef({})
+    const tagDrag = useRef({});
     const tagDragEnter = useRef({});
-    //Animation
-    const [propsSpring, set, stop] = useSpring(() => ({ from: { bottom: -25 }, to: { bottom: 0 },config:{duration:250},reset:true }));
-
-
+    const [propsSpring, set, stop] = useSpring(() => ({ to: { rotate: 25, bottom: 0 }, from: { rotate: 0, bottom: -50 }, config: { duration: 250 }, reset: true }))
 
     const handleDragStart = (e, task, index) => {
         console.log(e.target);
-        console.log('dragEnd');
+        console.log(task);
         //Lưu lại giá trị của task đang drag
         tagDrag.current = task;
     }
@@ -36,9 +30,8 @@ export default function DemoDragDrop(props) {
         // console.log('dragEnterTag',e.target)
         // console.log('targertOver',task)
         // console.log('index',index)
-        //Lưu lại giá trị của task được kéo ngang qua
-        set({bottom:0});
-        tagDragEnter.current = { ...taskDragEnter };
+        set({ bottom: 0 })
+       
 
         let taskListUpdate = [...taskList];
         //Láy ra index thằng đang kéo
@@ -53,69 +46,72 @@ export default function DemoDragDrop(props) {
         //Lấy thằng kéo qua gán = đang keo
         taskListUpdate[indexDragEnter] = temp;
 
-
+        tagDragEnter.current = taskDragEnter;
 
         setTaskList(taskListUpdate);
+
 
 
     }
 
     const handleDragEnd = (e) => {
-       
+
+
     }
     const handleDrop = (e) => {
         // console.log('drop', e.target);
     }
     return (
-        <div className="container" onDragOver={(e)=> {
+        <div className="container" onDragOver={(e) => {
             e.stopPropagation();
-             e.preventDefault();
-
-         }}  onDrop={(e)=> {
-
-            tagDrag.current = {};
-            console.log('dragEnd')
-            setTaskList([...taskList])
-
-         }}>
+            e.preventDefault();
+        }}
+            onDrop={(e) => {
+                tagDrag.current = {}
+                setTaskList([...taskList])
+            }}
+        >
             <div className="text-center display-4">Task list</div>
             <div className="row">
                 <div className="col-2"></div>
                 <div className="bg-dark p-5 col-4">
                     {taskList.map((task, index) => {
 
-                        let cssDragTag = task.id === tagDrag.current.id ? 'dragTag' : '';
-
-                        if (task.id === tagDragEnter.current.id) {
+                        let cssDrag = task.id === tagDrag.current.id ? 'tagDrag' : ''
+                        let cssDragEnter = tagDragEnter.current.id == task.id ? 'tagDragEnter' : '';
+                        if (cssDragEnter !== '') {
                             return <animated.div
                                 style={{
-                                    position:'relative',
-                                    bottom: propsSpring.bottom.interpolate(numBottom => `${numBottom}px`)
+                                    transform: propsSpring.bottom.interpolate(r => `${r}px`),
+                                    position: 'relative',
+                                    bottom: propsSpring.bottom.interpolate(r => `${r}px`),
+
+
                                 }}
+
                                 onDragStart={(e) => { handleDragStart(e, task, index) }}
                                 onDragEnter={(e) => { handleDragEnter(e, task, index) }}
-                                onDragEnd={(e) => { handleDragEnd(e) }}
                                 draggable="true"
+                                onDragEnd={(e) => { handleDragEnd(e) }}
+                                onDragLeave={(e) => { handleDragEnd(e) }}
                                 key={index}
-                                className={`bg-success text-white m-1 p-3`}
-                            >
-
-
+                                className={`bg-success text-white m-1 p-3 ${cssDrag} ${cssDragEnter}`}>
                                 {task.taskName}
-
-
                             </animated.div>
-                        }
+                        } else {
+                            return <div
 
-                        return <div
-                            onDragStart={(e) => { handleDragStart(e, task, index) }}
-                            onDragEnter={(e) => { handleDragEnter(e, task, index) }}
-                            onDragEnd={(e) => { handleDragEnd(e) }}
-                            draggable="true"
-                            key={index}
-                            className={`bg-success text-white m-1 p-3 ${cssDragTag}`}>
-                            {task.taskName}
-                        </div>
+                                onDragStart={(e) => { handleDragStart(e, task, index) }}
+                                onDragEnter={(e) => { handleDragEnter(e, task, index) }}
+                                draggable="true"
+                                onDragEnd={(e) => { handleDragEnd(e) }}
+                                onDragLeave={(e) => { handleDragEnd(e) }}
+
+                                key={index}
+                                className={`bg-success text-white m-1 p-3 ${cssDrag} ${cssDragEnter}`}>
+                                {task.taskName}
+                            </div>
+                        }
                     })}
                 </div>
                 <div className="col-2 bg-primary" style={{ height: 500 }} ></div>

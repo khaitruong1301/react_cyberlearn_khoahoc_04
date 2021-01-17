@@ -26,6 +26,7 @@ import ProjectManagement from './pages/CyberBugs/ProjectManagement/ProjectManage
 import DrawerCyberBugs from './HOC/CyberbugsHOC/DrawerCyberBugs';
 import NotificationComponent from './components/Notification/NotificationComponent';
 import DemoDragDrop from './pages/DemoDragDrop/DemoDragDrop';
+import Demo from './pages/Demo/Demo';
 
 function App() {
 
@@ -62,6 +63,7 @@ function App() {
         <HomeTemplate exact path='/todolistredux' Component={ToDoListRedux} />
         <HomeTemplate exact path='/todolistsaga' Component={BaiTapToDoListSaga} />
         <HomeTemplate exact path='/demohocmodal' Component={DemoHOCModal} />
+        <HomeTemplate exact path='/demo' Component={Demo} />
         <CyberbugsTemplate exact path='/cyberbugs' Component={indexCyberBugs} />
         <CyberbugsTemplate exact path='/createproject' Component={CreateProject} />
         <CyberbugsTemplate exact path='/projectmanagement' Component={ProjectManagement} />

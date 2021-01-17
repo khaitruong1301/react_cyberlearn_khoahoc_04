@@ -36,6 +36,7 @@ export default function Header() {
                             <NavLink className="dropdown-item" to="/todolistredux">To do list redux</NavLink>
                             <NavLink className="dropdown-item" to="/todolistsaga">To do list saga</NavLink>
                             <NavLink className="dropdown-item" to="/dragdrop">DemoDragDrop</NavLink>
+                            <NavLink className="dropdown-item" to="/demo">Demo</NavLink>
 
                             
                         </div>
