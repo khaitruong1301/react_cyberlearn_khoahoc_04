@@ -11,7 +11,7 @@ const defaultValue = [
     { id: 3, taskName: 'Task 3' },
     { id: 4, taskName: 'Task 4' },
     { id: 5, taskName: 'Task 5' },
-]
+];
 
 
 export default function DemoDragDrop(props) {

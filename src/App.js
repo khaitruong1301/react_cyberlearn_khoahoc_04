@@ -27,6 +27,7 @@ import DrawerCyberBugs from './HOC/CyberbugsHOC/DrawerCyberBugs';
 import NotificationComponent from './components/Notification/NotificationComponent';
 import DemoDragDrop from './pages/DemoDragDrop/DemoDragDrop';
 import Demo from './pages/Demo/Demo';
+import DragAndDropDnD from './pages/DragAndDropDnD/DragAndDropDnD';
 
 function App() {
 
@@ -64,6 +65,7 @@ function App() {
         <HomeTemplate exact path='/todolistsaga' Component={BaiTapToDoListSaga} />
         <HomeTemplate exact path='/demohocmodal' Component={DemoHOCModal} />
         <HomeTemplate exact path='/demo' Component={Demo} />
+        <HomeTemplate exact path='/demodragdropdnd' Component={DragAndDropDnD} />
         <CyberbugsTemplate exact path='/cyberbugs' Component={indexCyberBugs} />
         <CyberbugsTemplate exact path='/createproject' Component={CreateProject} />
         <CyberbugsTemplate exact path='/projectmanagement' Component={ProjectManagement} />
